@@ -1,9 +1,0 @@
-{
-    "label": "rust test",
-    "type": "shell",
-    "command": "start",
-    "args": [
-      "${workspaceFolder}/target/debug/rust-ex.exe"
-    ]
-  }
-  

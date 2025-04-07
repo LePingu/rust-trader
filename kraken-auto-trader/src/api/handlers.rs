@@ -19,7 +19,10 @@ pub async fn get_balance(req: actix_web::HttpRequest) -> impl Responder {
 #[get("/trade-volume")]
 pub async fn get_trade_volume(req: actix_web::HttpRequest) -> impl Responder {
     let account = Account::new().unwrap();
-    match account.get_trade_volume(req, Some("ETHUSD".to_string())).await {
+    match account
+        .get_trade_volume(req, Some("ETHUSD".to_string()))
+        .await
+    {
         Ok(volume) => HttpResponse::Ok().json(volume),
         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
     }
@@ -43,11 +46,35 @@ pub async fn get_server_time(req: actix_web::HttpRequest) -> impl Responder {
     }
 }
 
-// #[get("/open-orders")]
-// pub async fn get_open_orders(req: actix_web::HttpRequest) -> impl Responder {
-//     let account = Account::new().unwrap();
-//     match account.get_open_orders(req).await {
-//         Ok(orders) => HttpResponse::Ok().json(orders),
-//         Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
-//     }
-// } 
+#[get("/ticker")]
+pub async fn get_ticker(req: actix_web::HttpRequest) -> impl Responder {
+    let market = MarketData::new();
+    match market.get_ticker(req, "XBTUSD".to_string()).await {
+        Ok(status) => HttpResponse::Ok().json(status),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}
+
+#[get("/recent-trades")]
+pub async fn get_recent_trades(req: actix_web::HttpRequest) -> impl Responder {
+    let market = MarketData::new();
+    match market
+        .get_recent_trades(req, "ETHGBP".to_string(), Some(1616663618), Some(10))
+        .await
+    {
+        Ok(trades) => HttpResponse::Ok().json(trades),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}
+
+#[get("/recent-spreads")]
+pub async fn get_recent_spreads(req: actix_web::HttpRequest) -> impl Responder {
+    let market = MarketData::new();
+    match market
+        .get_recent_spreads(req, "ETHGBP".to_string(), None)
+        .await
+    {
+        Ok(trades) => HttpResponse::Ok().json(trades),
+        Err(e) => HttpResponse::InternalServerError().body(e.to_string()),
+    }
+}

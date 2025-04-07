@@ -8,6 +8,9 @@ pub enum Error {
     #[error("Invalid response: {0}")]
     InvalidResponse(String),
 
+    #[error("Invalid parameter: {0}")]
+    InvalidParameter(String),
+    
     #[error("Serialization error: {0}")]
     SerializationError(#[from] serde_json::Error),
 

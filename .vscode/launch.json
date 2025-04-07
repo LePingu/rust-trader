@@ -8,26 +8,34 @@
             "type": "lldb",
             "request": "launch",
             "name": "Cargo launch",
-            "cwd": "${workspaceRoot}/kraken-auto-trader",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=kraken-auto-trader"
-                ]
+                    "--package",
+                    "kraken-auto-trader",
+                    "--manifest-path=kraken-auto-trader/Cargo.toml"
+                ],
             },
-            "args": []
+            "cwd": "${workspaceFolder}/kraken-auto-trader",
+            "args": [],
+            "envFile": "${workspaceFolder}/kraken-auto-trader/.env"
         },
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/kraken-auto-trader/target/debug/kraken-auto-trader",
-            "args": [],
-            "cwd": "${workspaceRoot}",
-            "sourceLanguages": [
-                "rust"
-            ],
-            "envFile": "${workspaceFolder}/kraken-auto-trader/.env"
+            "name": "Debug Test",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--test",
+                    "*",
+                    "--manifest-path=kraken-auto-trader/Cargo.toml"
+                ],
+                "filter": {
+                    "kind": "test"
+                }
+            },
+            "args": []
         }
     ]
 }

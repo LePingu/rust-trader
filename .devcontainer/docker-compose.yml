@@ -14,6 +14,7 @@ services:
 
     volumes:
       - ../..:/workspaces:cached
+      - ~/Documents/dev/rust-playground:/workspaces:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
